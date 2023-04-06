@@ -1,6 +1,6 @@
 Accelerated pipeline for quick prototyping PFC code by writing in Julia and generating an equivalent high performance, mpi parallelized C code. 
 
-It is worth noting that there are a few bugs and edge cases that have not been worth the time to develope fixes for as they can be easily corrected after the fact.
+It is worth noting that there are a few bugs and edge cases that have not been worth the time to develop fixes for as they can be easily corrected after the fact.
 
 Additionally, there is a conflict between the native handling of fourier transforms in Julia and C. Julia automatically normalizes the fourier transforms while C does not. As I have used this primarily to code directly into HPC I generally encode a normalization into the julia code which means that it would not correctly simulate if run in Julia.
 
