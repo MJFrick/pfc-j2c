@@ -11,3 +11,4 @@ Known bugs:
 
 Known edge cases:
 - The calculation of the square of the wave vector is not properly transposed such that kx is calculated from the second index and ky by the first index. This must be done manually. This does not seem worth the dev time to correct.
+- Similarly, the code has no way of knowing when a loop index requires global indexing. Since this is rare, generally only needed for the calculation of the wavevector and potentially the seed I've chosen to simply do this manually.
