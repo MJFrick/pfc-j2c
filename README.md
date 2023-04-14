@@ -6,9 +6,10 @@ Additionally, there is a conflict between the native handling of fourier transfo
 
 Known bugs:
 - When replacing the caret symbol for powers with the power function, the base is not recursively passed through replacements. No current plans to correct this.
-- All arrays are treated as real arrays for the purposes of saving function. I may fix this later.
 - Not currently defining all the various functions in the header. Again, I may fix this later.
 
 Known edge cases:
 - The calculation of the square of the wave vector is not properly transposed such that kx is calculated from the second index and ky by the first index. This must be done manually. This does not seem worth the dev time to correct.
 - Similarly, the code has no way of knowing when a loop index requires global indexing. Since this is rare, generally only needed for the calculation of the wavevector and potentially the seed I've chosen to simply do this manually.
+- I have not written a convenience function for reading real valued fourier space arrays. Given that only real space arrays are required to restart a simulation and data file size can scale quickly with PFC simulations I doubt I will correct this.
+
