@@ -6,7 +6,7 @@ Additionally, there is a conflict between the native handling of fourier transfo
 
 Known bugs:
 - When replacing the caret symbol for powers with the power function, the base is not recursively passed through replacements. No current plans to correct this.
-- Not currently defining all the various functions in the header. Again, I may fix this later.
+- Not currently defining all the various functions in the header. I may fix this later.
 
 Known edge cases:
 - The calculation of the square of the wave vector is not properly transposed such that kx is calculated from the second index and ky by the first index. This must be done manually. This does not seem worth the dev time to correct.
