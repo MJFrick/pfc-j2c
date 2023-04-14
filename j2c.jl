@@ -384,7 +384,7 @@ const int io_verbose = true;\n")
 
      char groupname[50];
      char step_str[10];
-     sprintf(step_str, \"%\", s->step);
+     sprintf(step_str, \"%d\", s->step);
      sprintf(groupname, \"%0*d%s\", LEN-(int)strlen(step_str), 0, step_str);
 
      group_id = H5Gcreate (file_id,
@@ -400,7 +400,7 @@ const int io_verbose = true;\n")
             # match the type definition to appropriate c types
             clines = @match type begin
                 "ReArrays"      =>  replace.(lstrip.(lines), r"(?<var>(\w|\d)+)" => s"status = write_array_dataset(\"\g<var>\", group_id, s->\g<var>, s);\n")
-                "halfReArrays"  =>  replace.(lstrip.(lines), r"(?<var>(\w|\d)+)" => s"status = write_array_dataset(\"\g<var>\", group_id, s->\g<var>, s);\n")
+                "halfReArrays"  =>  replace.(lstrip.(lines), r"(?<var>(\w|\d)+)" => s"status = write_Rek_array_dataset(\"\g<var>\", group_id, s->\g<var>, s);\n")
                 "dims"          =>  replace.(lstrip.(lines), r"(?<var>(\w|\d)+)" => s"int \g<var>_int = (int)s->\g<var>; \n status = write_int_attribute(\"\g<var>\", group_id, &s->\g<var>);\n")
                 "IntParams"     =>  replace.(lstrip.(lines), r"(?<var>(\w|\d)+)" => s"status = write_int_attribute(\"\g<var>\", group_id, &s->\g<var>);\n")
                 "doubleParams"  =>  replace.(lstrip.(lines), r"(?<var>(\w|\d)+)" => s"status = write_double_attribute(\"\g<var>\", group_id, &s->\g<var>);\n")
@@ -562,8 +562,8 @@ function parse_vectorized(line, ioc, dims, braces)
                                             end
                         "CmxArrays"     =>  begin
                                                 write(ioc, lpad(statevar*"->"*array*"[index][0] "*op*"=", 4*braces))
-                                                right = replace(right, ".*" => s"*", "./" => s"/", ".+" => s"+", ".-" => s"-", ".^"=>s"^", r"\b(?<func>(\w|\d)+)\.\((?<args>(.)+)\)"=>s"\g<func>(\g<args>)")
-
+                                                right2 = replace(right, ".*" => s"*", "./" => s"/", ".+" => s"+", ".-" => s"-", ".^"=>s"^", r"\b(?<func>(\w|\d)+)\.\((?<args>(.)+)\)"=>s"\g<func>(\g<args>)")
+                                                right = right2
                                                 if (checkpows)
                                                     right = parse_power(right)
                                                 end
@@ -574,8 +574,8 @@ function parse_vectorized(line, ioc, dims, braces)
                                                 write(ioc, lpad(right*";\n", 4*braces))
 
                                                 write(ioc, lpad(statevar*"->"*array*"[index][1] "*op*"=", 4*braces))
-                                                right = replace(right, ".*" => s"*", "./" => s"/", ".+" => s"+", ".-" => s"-", ".^"=>s"^", r"\b(?<func>(\w|\d)+)\.\((?<args>(.)+)\)"=>s"\g<func>(\g<args>)")
-
+                                                # right = replace(right, ".*" => s"*", "./" => s"/", ".+" => s"+", ".-" => s"-", ".^"=>s"^", r"\b(?<func>(\w|\d)+)\.\((?<args>(.)+)\)"=>s"\g<func>(\g<args>)")
+                                                right = right2
                                                 if (checkpows)
                                                     right = parse_power(right)
                                                 end
